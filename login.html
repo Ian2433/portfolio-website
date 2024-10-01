@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Login with Firebase</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDDISZdYtuNaRDdktb6QFxmf2Vc-sRc4L4",
+            authDomain: "login-c6d59.firebaseapp.com",
+            projectId: "login-c6d59",
+            storageBucket: "login-c6d59.appspot.com",
+            messagingSenderId: "425763772578",
+            appId: "1:425763772578:web:33c6f5b3b620b559e21ffb"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // GitHub profile URL for redirection
+        const githubProfileUrl = "https://github.com/your-username";  // Replace with your GitHub profile URL
+
+        // Function to handle Google sign-in and redirect
+        async function signInWithGoogle() {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                console.log("User signed in: ", user);
+                
+                // Redirect to GitHub profile after successful login
+                window.location.href = githubProfileUrl;
+            } catch (error) {
+                console.error("Error signing in: ", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('google-signin-btn').addEventListener('click', signInWithGoogle);
+        });
+    </script>
+</head>
+<body>
+    <h1>Google Login with Firebase</h1>
+    <button id="google-signin-btn">Sign in with Google</button>
+</body>
+</html>
